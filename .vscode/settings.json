@@ -1,0 +1,34 @@
+{
+  "editor.formatOnSave": true,
+  // Let linters format scss, js and jsx files
+  "[scss]": {
+    "editor.formatOnSave": false
+  },
+  "[javascript]": {
+    "editor.formatOnSave": false
+  },
+  "[javascriptreact]": {
+    "editor.formatOnSave": false
+  },
+
+  "eslint.enable": true,
+  // Disable auto fix for let -> const
+  "eslint.options": {
+    "rules": {
+      "prefer-const": "off"
+    }
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.fixAll.stylelint": true
+  },
+  "files.eol": "\n",
+  "editor.tabSize": 2,
+
+  // Hide autogenereated types for scss files
+  "files.exclude": {
+    "**/*.scss.d.ts": true
+  },
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true
+}
