@@ -31,7 +31,7 @@ _Boiler plate forked from: https://github.com/crsandeep/simple-react-full-stack 
 
 ### Create an app in Bimsync
 
-To get started you first need to create an App in Bimsync. Apps are free to create. For now you will have to contact [Bimsync support](mailto:support@bimsync.com) to do it. _If you plan to put your app into production, you should ask for two apps, one for development and one for production (and one for staging if you need that). And you should also make sure the users' sessions/tokens are stored properly whether you use this example app or your own implementation_.
+To get started you first need to create an App in Bimsync. In order to create a new application you will need to contact [Bimsync support](mailto:support@bimsync.com). _If you plan to put your app into production, you should ask for two apps, one for development and one for production (and one for staging if you need that). And you should also make sure the users' sessions/tokens are stored properly whether you use this example app or your own implementation_.
 
 When an App has been created you can find the App credentials in your [Bimsync account](https://bimsync.com/account/integrations).
 To run this demo app in development mode make sure the redirect_uri is set to `http://localhost:9000/auth`.
