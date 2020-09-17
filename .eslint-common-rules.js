@@ -33,6 +33,7 @@ module.exports = {
   ], // For some reason maxEOF have to be 0 to allow max 1 newline
   'no-param-reassign': 'error',
   'no-underscore-dangle': 'off',
+  'no-unused-expressions': 'off',
   'no-unused-vars': 'error',
   'object-curly-newline': 'off',
   'operator-linebreak': 'off',
