@@ -51,6 +51,19 @@ export const initViewer3D = (store, element, tokenUrl) => {
   });
 };
 
+export const initViewer3dSingleProduct = (store, element, tokenUrl, objectId) => {
+  const $viewer3dDetails = window.jQuery(element);
+
+  window.bimsync.setOnLoadCallback(() => {
+    $viewer3dDetails.viewer({
+      enableTouch: true
+    });
+    $viewer3dDetails.viewer('loadUrl', tokenUrl, {
+      objectId
+    });
+  });
+};
+
 export const viewer3dToggleSpaces = (element, spaces, mode) => {
   const $viewer = window.jQuery(element);
   switch (mode) {
@@ -71,5 +84,5 @@ export const viewer3dToggleSpaces = (element, spaces, mode) => {
 };
 
 export const resizeViewer3D = (viewerElement) => {
-  window.jQuery(viewerElement).viewer('resize'); // eslint-disable-line no-unused-expressions
+  window.jQuery(viewerElement).viewer('resize');
 };

@@ -11,6 +11,7 @@ import { CircularProgress, Divider, IconButton, Drawer, Typography } from '@mate
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { useRouteMatch } from 'react-router-dom';
 import { fetchProductDetails } from '../../../../api/app-api';
+import { DetailsViewer } from './DetailsViewer';
 import styles from './DetailsPanel.module.scss';
 
 export const DetailsPanel = observer(({ store, className }) => {
@@ -65,6 +66,7 @@ export const DetailsPanel = observer(({ store, className }) => {
             <div><b>GlobalId</b></div>
             <div>{details.attributes?.GlobalId?.value}</div>
           </div>
+          <DetailsViewer store={store} className={styles.viewer3D} selectedObjectId={selectedObjectId} />
         </div>
       )}
       {loading && (

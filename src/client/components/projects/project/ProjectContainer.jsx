@@ -34,7 +34,7 @@ export const ProjectContainer = observer(({ store }) => {
   }, [projectId]);
 
   const resizeViewer = () => {
-    resizeViewer3D(viewer3dRef?.current); // eslint-disable-line no-unused-expressions
+    resizeViewer3D(viewer3dRef?.current);
   };
 
   return (

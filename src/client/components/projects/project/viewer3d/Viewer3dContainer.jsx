@@ -21,15 +21,21 @@ export const Viewer3dContainer = observer(React.forwardRef(({ store }, ref) => {
   const selected = store.selectedObjectIds;
   const { viewer3dState, viewer3dDisplayMode } = store;
 
+  useEffect(() => () => {
+    if (ref?.current) {
+      window.jQuery(ref.current).viewer?.('dispose');
+    }
+  }, []); // Dispose WebGL context and release memory on unmount.
+
   useEffect(() => {
     if (viewer3dState === State.LOADED) {
-      window.jQuery(ref.current).viewer('select', selected); // eslint-disable-line no-unused-expressions
+      window.jQuery(ref.current).viewer('select', selected);
     }
   }, [selected]);
 
   useEffect(() => {
     if (viewer3dState === State.LOADED) {
-      viewer3dToggleSpaces(window.jQuery(ref.current), store.spaces, viewer3dDisplayMode); // eslint-disable-line no-unused-expressions
+      viewer3dToggleSpaces(window.jQuery(ref.current), store.spaces, viewer3dDisplayMode);
     }
   }, [viewer3dDisplayMode]);
 
