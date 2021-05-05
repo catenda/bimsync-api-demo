@@ -13,26 +13,45 @@ import { Navbar } from './components/navbar/Navbar';
 import { SignedOut } from './components/signed-out/SignedOut';
 import styles from './App.module.scss';
 
-export const App = ({ store }) => (
-  <Router>
-    <div className={styles.mainContainer}>
-      <Navbar store={store} />
-      <div className={styles.contentContainer}>
-        <Switch>
-          <Route exact path="/">
-            <ProjectsList store={store} />
-          </Route>
-          <Route exact path="/project/:projectId">
-            <ProjectContainer store={store} />
-          </Route>
-          <Route exact path="/signed-out">
-            <SignedOut />
-          </Route>
-          <Route>
-            <div>NOT FOUND</div>
-          </Route>
-        </Switch>
+const ensureViewerScriptsLoaded = (store) => {
+  if (!store.viewer3dScriptsLoaded) {
+    window.bimsync.setOnLoadCallback(() => {
+      store.setViewer3dScriptLoaded();
+    });
+    window.bimsync.load(['viewer-ui']);
+  }
+  if (!store.viewer2dScriptsLoaded) {
+    window.bimsync.setOnViewer2dLoadCallback(() => {
+      store.setViewer2dScriptLoaded();
+    });
+    window.bimsync.loadViewer2d();
+  }
+};
+
+export const App = ({ store }) => {
+  ensureViewerScriptsLoaded(store);
+
+  return (
+    <Router>
+      <div className={styles.mainContainer}>
+        <Navbar store={store} />
+        <div className={styles.contentContainer}>
+          <Switch>
+            <Route exact path="/">
+              <ProjectsList store={store} />
+            </Route>
+            <Route exact path="/project/:projectId">
+              <ProjectContainer store={store} />
+            </Route>
+            <Route exact path="/signed-out">
+              <SignedOut />
+            </Route>
+            <Route>
+              <div>NOT FOUND</div>
+            </Route>
+          </Switch>
+        </div>
       </div>
-    </div>
-  </Router>
-);
+    </Router>
+  );
+};

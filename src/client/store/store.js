@@ -6,8 +6,7 @@
  */
 
 import { computed, observable, action, autorun, toJS } from 'mobx';
-import { State } from '../utils/viewer-state';
-import { Viewer3dToggleSpaceModes } from '../components/projects/project/viewer3d/viewer-3d';
+import { Viewer3dToggleSpaceModes } from '../viewer/viewer-3d-spaces-mode';
 
 export default class Store {
   constructor() {
@@ -18,13 +17,13 @@ export default class Store {
     return toJS(this);
   }
 
+  @observable viewer2dScriptLoaded = false;
+
+  @observable viewer3dScriptLoaded = false;
+
   @observable user = null;
 
-  @observable viewer3dState = null;
-
   @observable viewer3dDisplayMode = Viewer3dToggleSpaceModes.SHOW_ALL;
-
-  @observable viewer2dState = null;
 
   @observable spaces = [];
 
@@ -40,15 +39,10 @@ export default class Store {
 
   @observable detailsPanelOpen = false;
 
-  @observable viewer3dTokenUrl = null;
-
   @action.bound
   setCurrentProjectId(projectId) {
     if (this.currentProjectId !== projectId) {
       this.currentProjectId = projectId;
-      this.viewer3dTokenUrl = null;
-      this.viewer3dState = State.NOT_INITIALIZED;
-      this.viewer2dState = State.NOT_INITIALIZED;
       this.viewer3dDisplayMode = Viewer3dToggleSpaceModes.SHOW_ALL;
       this.detailsPanelOpen = false;
     }
@@ -62,13 +56,18 @@ export default class Store {
   }
 
   @action.bound
-  setUser(user) {
-    this.user = user;
+  setViewer2dScriptLoaded() {
+    this.viewer2dScriptLoaded = true;
   }
 
   @action.bound
-  setViewer3dTokenUrl(viewer3dTokenUrl) {
-    this.viewer3dTokenUrl = viewer3dTokenUrl;
+  setViewer3dScriptLoaded() {
+    this.viewer3dScriptLoaded = true;
+  }
+
+  @action.bound
+  setUser(user) {
+    this.user = user;
   }
 
   @action.bound
@@ -100,15 +99,5 @@ export default class Store {
   @action.bound
   setDetailsPanelOpen(open) {
     this.detailsPanelOpen = open;
-  }
-
-  @action.bound
-  setViewer3dState(state) {
-    this.viewer3dState = state;
-  }
-
-  @action.bound
-  setViewer2dState(state) {
-    this.viewer2dState = state;
   }
 }

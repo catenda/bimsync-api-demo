@@ -7,7 +7,7 @@
 
 import React, { useState } from 'react';
 import { Radio, FormControlLabel, RadioGroup, FormControl } from '@material-ui/core';
-import { Viewer3dToggleSpaceModes } from './viewer-3d';
+import { Viewer3dToggleSpaceModes } from '../../../../viewer/viewer-3d-spaces-mode';
 
 export const Toolbar = ({ store, className }) => {
   const [value, setValue] = useState(store.viewer3dDisplayMode);
