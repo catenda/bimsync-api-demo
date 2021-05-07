@@ -7,29 +7,51 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { observer } from 'mobx-react';
-import { initViewer3dSingleProduct } from '../viewer3d/viewer-3d';
 import { Loader } from '../../../loader/Loader';
+import { Viewer3D } from '../../../../viewer/Viewer3D';
 import styles from './DetailsViewer.module.scss';
+import { fetchViewer3dToken } from '../../../../api/app-api';
 
-export const DetailsViewer = observer(({ store, className, selectedObjectId }) => {
+export const DetailsViewer = observer(({ store, projectId, className, selectedObjectId }) => {
   const viewerRef = useRef();
+  const viewer = useRef();
   const [loading, setLoading] = useState(false);
+  const { viewer3dScriptLoaded } = store;
+
+  const [viewer3dTokenUrl, setViewer3dTokenUrl] = useState(null);
+
+  useEffect(() => {
+    fetchViewer3dToken(projectId).then(((viewer3dUrl) => {
+      setViewer3dTokenUrl(viewer3dUrl);
+    }));
+    return () => {
+      // Dispose WebGL context and release memory on unmount.
+      viewer.current?.dispose();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (viewer3dScriptLoaded && !viewer.current && viewerRef.current) {
+      viewer.current = new Viewer3D(viewerRef.current, {
+        enableTouch: true
+      }, null, null);
+    }
+  }, [viewer3dScriptLoaded, viewer.current, viewerRef.current]);
+
+  useEffect(() => {
+    if (viewer.current && viewer3dTokenUrl) {
+      setLoading(true);
+      viewer.current.loadObjectsFromUrl(viewer3dTokenUrl, selectedObjectId, () => {
+        setLoading(false);
+      });
+    }
+  }, [viewer3dTokenUrl, viewer.current]);
 
   useEffect(() => {
     if (selectedObjectId && viewerRef?.current) {
-      window.jQuery(viewerRef.current).on('viewer.load', () => {
-        setLoading(false);
-      });
       setLoading(true);
-      initViewer3dSingleProduct(store, viewerRef.current, store.viewer3dTokenUrl, selectedObjectId);
     }
   }, [viewerRef?.current]);
-
-  useEffect(() => () => {
-    if (viewerRef?.current) {
-      window.jQuery(viewerRef.current).viewer?.('dispose');
-    }
-  }, []); // Dispose WebGL context and release memory on unmount.
 
   return (
     <div className={className}>

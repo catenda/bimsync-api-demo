@@ -66,7 +66,7 @@ export const DetailsPanel = observer(({ store, className }) => {
             <div><b>GlobalId</b></div>
             <div>{details.attributes?.GlobalId?.value}</div>
           </div>
-          <DetailsViewer store={store} className={styles.viewer3D} selectedObjectId={selectedObjectId} />
+          <DetailsViewer store={store} projectId={projectId} className={styles.viewer3D} selectedObjectId={selectedObjectId} />
         </div>
       )}
       {loading && (

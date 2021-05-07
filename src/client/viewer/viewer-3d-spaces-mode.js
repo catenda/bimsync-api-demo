@@ -5,9 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export const State = {
-  NOT_INITIALIZED: null,
-  LOADING: 'loading',
-  LOADED: 'loaded',
-  FAILES: 'failed'
+export const Viewer3dToggleSpaceModes = {
+  SHOW_ALL: 'Show all',
+  SPACES_ONLY: 'Rooms only',
+  HIDE_ROOMS: 'Hide rooms'
 };

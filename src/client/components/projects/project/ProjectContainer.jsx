@@ -5,16 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { useEffect, useRef } from 'react';
-import SplitPane from 'react-split-pane';
 import { observer } from 'mobx-react';
+import React, { useEffect, useRef } from 'react';
 import { useRouteMatch } from 'react-router-dom';
-import { Viewer3dContainer } from './viewer3d/Viewer3dContainer';
-import { Viewer2dContainer } from './viewer2d/Viewer2dContainer';
+import SplitPane from 'react-split-pane';
+import { fetchSpaces } from '../../../api/app-api';
 import { BimsyncLogo } from '../../bimsync-logo/BimsyncLogo';
 import { DetailsPanel } from './details-panel/DetailsPanel';
-import { fetchSpaces } from '../../../api/app-api';
-import { resizeViewer3D } from './viewer3d/viewer-3d';
+import { Viewer2dContainer } from './viewer2d/Viewer2dContainer';
+import { Viewer3dContainer } from './viewer3d/Viewer3dContainer';
 import styles from './ProjectContainer.module.scss';
 
 export const ProjectContainer = observer(({ store }) => {
@@ -34,7 +33,7 @@ export const ProjectContainer = observer(({ store }) => {
   }, [projectId]);
 
   const resizeViewer = () => {
-    resizeViewer3D(viewer3dRef?.current);
+    window.jQuery(viewer3dRef?.current)?.viewer('resize');
   };
 
   return (
