@@ -7,15 +7,11 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Store from './store/store';
 import { App } from './App';
 import 'mobx-react/batchingForReactDom';
 import './index.module.scss';
 
-const store = new Store();
-window.store = store;
-
 ReactDOM.render(
-  <App store={store} />,
+  <App />,
   document.getElementById('root')
 );
