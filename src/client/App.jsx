@@ -1,24 +1,57 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Viewer3DContainer } from './viewer/Viewer3DContainer';
+/**
+ * Copyright (c) Catenda AS.
+ *
+ * This source code is licensed under the ISC license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
 
-export const App = () => {
-  const [viewer3DScriptLoaded, setViewer3DScriptLoaded] = useState(false);
-  const viewer3dRef = useRef(null);
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { ProjectsList } from './components/projects/ProjectsList';
+import { ProjectContainer } from './components/projects/project/ProjectContainer';
+import { Navbar } from './components/navbar/Navbar';
+import { SignedOut } from './components/signed-out/SignedOut';
+import styles from './App.module.scss';
 
-  useEffect(() => {
+const ensureViewerScriptsLoaded = (store) => {
+  if (!store.viewer3dScriptsLoaded) {
     window.bimsync.setOnLoadCallback(() => {
-      setViewer3DScriptLoaded(true);
+      store.setViewer3dScriptLoaded();
     });
     window.bimsync.load(['viewer-ui']);
-  }, []);
+  }
+  if (!store.viewer2dScriptsLoaded) {
+    window.bimsync.setOnViewer2dLoadCallback(() => {
+      store.setViewer2dScriptLoaded();
+    });
+    window.bimsync.loadViewer2d();
+  }
+};
+
+export const App = ({ store }) => {
+  ensureViewerScriptsLoaded(store);
 
   return (
-    <>
-      <Viewer3DContainer
-        ref={viewer3dRef}
-        viewer3dScriptLoaded={viewer3DScriptLoaded}
-        projectId="d25274480cb046b9a0b5c28d3eb63eed"
-      />
-    </>
+    <Router>
+      <div className={styles.mainContainer}>
+        <Navbar store={store} />
+        <div className={styles.contentContainer}>
+          <Switch>
+            <Route exact path="/">
+              <ProjectsList store={store} />
+            </Route>
+            <Route exact path="/project/:projectId">
+              <ProjectContainer store={store} />
+            </Route>
+            <Route exact path="/signed-out">
+              <SignedOut />
+            </Route>
+            <Route>
+              <div>NOT FOUND</div>
+            </Route>
+          </Switch>
+        </div>
+      </div>
+    </Router>
   );
 };
