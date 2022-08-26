@@ -1,0 +1,33 @@
+.details-panel {
+  .details-panel-header {
+    display: flex;
+    align-items: center;
+  }
+
+  .details-panel-content {
+    flex-grow: 1;
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+
+    .header {
+      margin-top: 0;
+    }
+
+    .row {
+      margin-bottom: 8px;
+    }
+
+    .viewer-3d {
+      width: 100%;
+      flex-grow: 1;
+    }
+  }
+
+  .details-panel-loader-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 10px;
+  }
+}
