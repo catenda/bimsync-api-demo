@@ -7,6 +7,6 @@
 
 export const Viewer3dToggleSpaceModes = {
   SHOW_ALL: 'Show all',
-  SPACES_ONLY: 'Rooms only',
+  SPACES_ONLY: 'Rooms',
   HIDE_ROOMS: 'Hide rooms'
 };
